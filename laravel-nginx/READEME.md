@@ -1,18 +1,18 @@
 # laravel-nginx
 
-## setup
-```
-make create-project
+## Introduction
 
+Build a simple laravel development environment with docker-compose.
+
+## Usage
+### setup
+```bash
+$ make create-project # Install the latest Laravel project
+$ make install-recommend-packages # Not required
 docker compose exec app composer require laravel/breeze --dev
 docker compose exec app php artisan breeze:install vue
-docker compose exec app yarn
-
-make front-install
-make create-front
-docker compose exec app yarn add -D vite
-docker compose exec app yarn add -D laravel-vite-plugin
-
+$ make front-install
+$ make create-front
 ```
 
 ### .gitignoreの編集
@@ -37,18 +37,10 @@ docker compose exec app yarn add -D laravel-vite-plugin
     }
     ```
 
-### docker-compose.ymlへの追加
+## If you edit Docker-related files after build
 ```
-# app
-  ports:
-    - target: 5173
-      published: ${WEB_PORT:-5173}
-      protocol: tcp
-      mode: host
+make refreash-rebuild
 ```
-
-## Dockerfileやdokcer-compose.ymlを変更した時
-- `make freash-rebuild`を実行
 - src/.gitignoreに下記を追加する
   ```
   /public/css
@@ -57,3 +49,45 @@ docker compose exec app yarn add -D laravel-vite-plugin
   /.yarn
   !.yarn/releases/*
   ```
+
+## URL
+- http://localhost
+
+
+## Container structure
+
+```bash
+├── app
+├── web
+└── db
+```
+
+### app container
+
+- Base image
+  - [php](https://hub.docker.com/_/php):8.0-fpm-buster
+  - [composer](https://hub.docker.com/_/composer):2.7
+  - [node](https://hub.docker.com/_/node):lts-bullseye-slim
+
+### web container
+
+- Base image
+  - [nginx](https://hub.docker.com/_/nginx):1.20-alpine
+  
+
+### db container
+
+- Base image
+  - [mysql](https://hub.docker.com/_/mysql):8.0
+
+#### Persistent MySQL Storage
+
+By default, the [named volume](https://docs.docker.com/compose/compose-file/#volumes) is mounted, so MySQL data remains even if the container is destroyed.
+If you want to delete MySQL data intentionally, execute the following command.
+
+```bash
+$ docker-compose down -v && docker-compose up
+```
+
+### policy
+- tfstateをAWSのストレージサービスであるS3に保存

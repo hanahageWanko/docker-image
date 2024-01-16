@@ -7,7 +7,7 @@ laravel-install:
 front-install:
 	docker compose exec app yarn init -2
 	rm -rf src/.git
-	sed -i -e $'1s/^/.yarn\\/\\\n\\!.yarn\\/release\\/*\\\n/' src/.gitignore
+	# sed -i -e $'1s/^/.yarn\\/\\\n\\!.yarn\\/release\\/*\\\n/' src/.gitignore
 create-front:
   docker compose exec app yarn add -D vite
 	docker compose exec app yarn add -D laravel-vite-plugin
@@ -24,7 +24,7 @@ create-project:
 	docker compose exec app chmod -R 777 storage bootstrap/cache
 	@make fresh
 install-recommend-packages:
-	docker compose exec app composer require doctrine/dbal "^2"
+	docker compose exec app composer require doctrine/dbal
 	docker compose exec app composer require --dev ucan-lab/laravel-dacapo
 	docker compose exec app composer require --dev barryvdh/laravel-ide-helper
 	docker compose exec app composer require --dev beyondcode/laravel-dump-server
