@@ -1,0 +1,2 @@
+# docker build時のDockerデーモンへの対象外ディレクトリ/ファイルを管理
+**/node=modules
