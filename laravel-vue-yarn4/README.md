@@ -63,7 +63,7 @@ docker compose exec app php artisan key:generate
 ## If you edit Docker-related files after build
 
 ```
-make refreash-rebuild
+make freash-rebuild
 ```
 
 ## URL
