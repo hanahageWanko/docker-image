@@ -1,2 +1,3 @@
 db_data
 .env
+src/main/__pycache__
