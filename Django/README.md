@@ -42,7 +42,9 @@ DATABASES = {
 }
 ```
 
-## 管理画面用のユーザーを作成する
+## DBへの接続および管理画面用のユーザーを作成する
 ``` bash
-docker-compose exec django python manage.py createsuperuser
+$ docker-compose exec django python manage.py migrate
+$ docker-compose exec django python manage.py createsuperuser
 ```
+
